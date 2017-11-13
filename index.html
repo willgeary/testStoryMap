@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.16.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<style>
+body {
+    margin:0;
+    padding:0;
+}
+#map {
+    position: fixed;
+    width: 70%;
+    top: 0;
+    bottom: 0;
+}
+#features {
+    width: 30%;
+    margin-left: 70%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+section {
+    padding:  80px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+}
+section.active {
+    opacity: 1;
+
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+/* Control map popup max-width here */
+.mapboxgl-popup {
+    max-width: 450px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+.marker-title {
+    font-weight: 700;
+}
+
+h1{
+  font-size: 26.5px;
+}
+
+p {
+  font-size:14px ;
+
+}
+
+}
+</style>
+
+<div id='map'></div>
+<div id='features'>
+    <section id='1' class='active'>
+        <h1>DRAFT INDICATIVE MATRIX FOR THE HIGH LEVEL REVITALISATION FORUM OF ARCSS</h1>
+        <p><center><b>Scroll down to follow the timeline.</b></center></p>
+        <center><image src="http://findicons.com/files/icons/2338/reflection/128/arrow_down_4.png"><center>
+    </section>
+    <section id='2'>
+        <h3>Meeting of the IGAD Council of Ministers</h3>
+        <p><b>Responsible Insitution:</b> Office of the Chairperson of IGAD Council of Ministers/IGAD Secretariat. </p>
+        <p><b>Timeline:</b> 02 July</p>
+        <p><b>Venue:</b> Addis Ababa</p>
+    </section>
+    <section id='3'>
+        <h3>Convene joint JMEC and IGAD Secretariat coordination meeting</h3>
+        <p><b>Responsible Insitution:</b> IGAD Secretariat</p>
+        <p><b>Timeline:</b> 04 July</p>
+        <p><b>Venue:</b> Addis Ababa</p>
+    </section>
+    <section id='4'>
+        <h3>Prepare budget estimates for the HLRF process</h3>
+        <p><b>Responsible Insitution:</b> IGAD Secretariat / JMEC Secretariat</p>
+        <p><b>Timeline:</b> 04 July</p>
+        <p><b>Venue:</b> Addis Ababa / Juba</p>
+    </section>
+    <section id='5'>
+        <h3>Convene a joint meeting of the Chiefs of Defence Forces of the Troop Contributing Countries (TCCs), TGoNU, and the UN and determine the timeline for full deployment of RPF</h3>
+        <p><b>Responsible Insitution:</b> TCCs/UNMISS/TGoNU</p>
+        <p><b>Timeline:</b> 17 July</p>
+        <p><b>Venue:</b> Juba</p>
+    </section>
+    <section id='6'>
+        <h3>Convene a JMEC Partners Forum meeting</h3>
+        <p><b>Responsible Insitution:</b> EU/IGAD</p>
+        <p><b>Timeline:</b> 01 August</p>
+        <p><b>Venue:</b> Addis Ababa</p>
+    </section>
+    <section id='7'>
+        <h3>Mapping Forum participants</h3>
+        <p><b>Responsible Insitution:</b> IGAD Special Envoy, Office of IGAD Chairperson, JMEC / IGAD Secretariat</p>
+        <p><b>Timeline:</b> 02 August</p>
+        <p><b>Venue:</b> Addis Ababa</p>
+    </section>
+    <section> </section>
+
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybGFwZWRyZXQiLCJhIjoiN0Z3aWQ3QSJ9.c8n4S98H7toNcSlMzwwDlQ';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/outdoors-v9',
+    center: [33.859863,7.993957],
+    zoom: 3,
+    bearing: 0,
+    pitch: 0
+});
+
+var chapters = {
+    '1': {
+        bearing: 0,
+        center: [33.859863,7.993957],
+        zoom: 4,
+        pitch: 20
+    },
+    '2': {
+        duration: 5000,
+        center: [38.754959,9.020049], // Addis Ababa
+        bearing: 0,
+        zoom: 8,
+        pitch: 20
+    },
+    '3': {
+        center: [38.754959,9.020049],// Addis Ababa
+        zoom: 8,
+        bearing: 0,
+        pitch: 20
+    },
+    '4': {
+        duration: 5000,
+        center: [31.600800,4.842628], // Juba
+        bearing: 0,
+        zoom: 8,
+        pitch: 20
+    },
+    '5': {
+        duration: 5000,
+        center: [31.600800,4.842628], // Juba
+        bearing: 0,
+        zoom: 8,
+        pitch: 20
+    },
+    '6': {
+        center: [38.754959,9.020049],// Addis Ababa
+        zoom: 8,
+        bearing: 0,
+        pitch: 20
+    },
+    '7': {
+        center: [38.754959,9.020049],// Addis Ababa
+        zoom: 8,
+        bearing: 0,
+        pitch: 20
+    }
+};
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+
+var activeChapterName = 'Jewellery';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+
+    map.flyTo(chapters[chapterName]);
+
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+
+    activeChapterName = chapterName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+</script>
+</body>
+</html>
